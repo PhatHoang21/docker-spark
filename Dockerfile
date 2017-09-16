@@ -8,6 +8,7 @@ RUN apt-get update \
  && /bin/bash -c "source /root/.sdkman/bin/sdkman-init.sh" \
  && /bin/bash -l -c "sdk install scala" \
  && /bin/bash -l -c "sdk install sbt" \
+ && echo 'alias ll="ls -l"' >> ~/.bashrc \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 

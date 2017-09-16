@@ -1,0 +1,6 @@
+*.tsv
+*.csv
+*.py
+.ivy2/
+.sbt/
+spark-events
