@@ -1,16 +1,17 @@
 # spark
 
-A based [Spark](http://spark.apache.org) container with few additional tools:
+An opinionated [Spark](http://spark.apache.org) based container with few additional tools:
 
 * Scala
 * Sbt
+* AWS-CLI
 
-See [gettyimages/spark](https://hub.docker.com/r/gettyimages/spark/) 
+Based on [gettyimages/spark](https://hub.docker.com/r/gettyimages/spark/) 
 
 Intended to be used together with the examples from:
 https://github.com/dataminelab/LearningSpark
 
-Can be used to run standalone Spark or together with `docker-compose.yml` can run a local cluster.
+Can be used to run standalone Spark or together with `docker-compose.yml` can create a local cluster.
 
 ## docker example
 
@@ -18,10 +19,17 @@ To run `SparkPi`, run the image with Docker:
 
     docker run --rm -it -p 4040:4040 dataminelab/dev-spark bin/run-example SparkPi 10
 
+Before starting the docker daemon:
+```
+# Note we assume that the LearningSpark is checked out on the same level as docker-spark
+git clone https://github.com/dataminelab/LearningSpark
+```
+
 To start the docker daemon:
 
 ```
-docker run -d --rm --name dev-spark -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/spark-examples:/var/examples dataminelab/dev-spark
+# replace $PWD/LearningSpark with the full path to your LearningSpark
+docker run -d --rm --name dev-spark -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/LearningSpark:/var/examples dataminelab/dev-spark
 # to see logs
 docker logs -f dev-spark
 # to connect with bash to the running container
@@ -32,7 +40,7 @@ Note, it might be useful to map ivy files to avoid downloading packages each tim
 ```
 mkdir $PWD/.sbt
 mkdir $PWD/.ivy2
-docker run -d --rm --name dev-spark -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/spark-examples:/var/examples -v $PWD/.ivy2:/root/.ivy2 -v $PWD/.sbt/:/root/.sbt/ dataminelab/dev-spark
+docker run -d --rm --name dev-spark -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/LearningSpark:/var/examples -v $PWD/.ivy2:/root/.ivy2 -v $PWD/.sbt/:/root/.sbt/ dataminelab/dev-spark
 ```
 
 See dockerhub:
