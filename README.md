@@ -1,9 +1,14 @@
 # spark
 
-A [gettyimages/spark](https://hub.docker.com/r/gettyimages/spark/) based [Spark](http://spark.apache.org) container with few additional tools:
+A based [Spark](http://spark.apache.org) container with few additional tools:
 
 * Scala
 * Sbt
+
+See [gettyimages/spark](https://hub.docker.com/r/gettyimages/spark/) 
+
+Intended to be used together with the examples from:
+https://github.com/dataminelab/LearningSpark
 
 Can be used to run standalone Spark or together with `docker-compose.yml` can run a local cluster.
 
@@ -13,22 +18,21 @@ To run `SparkPi`, run the image with Docker:
 
     docker run --rm -it -p 4040:4040 dataminelab/dev-spark bin/run-example SparkPi 10
 
-To simply run in bash and share volume folder:
+To start the docker daemon:
 
 ```
-docker run -d --rm -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/spark-examples:/var/examples dataminelab/dev-spark
+docker run -d --rm --name dev-spark -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/spark-examples:/var/examples dataminelab/dev-spark
 # to see logs
-docker ps
-docker logs -f [container-id]
+docker logs -f dev-spark
 # to connect with bash to the running container
-docker exec -it [container-id] /bin/bash
+docker exec -it dev-spark /bin/bash
 ```
 
-Note, it might be useful to map ivy files to avoid downloading packages each time docker is restarted:
+Note, it might be useful to map ivy files to avoid downloading packages each time docker container is restarted:
 ```
 mkdir $PWD/.sbt
 mkdir $PWD/.ivy2
-docker run -d --rm -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/spark-examples:/var/examples -v $PWD/.ivy2:/root/.ivy2 -v $PWD/.sbt/:/root/.sbt/ dataminelab/dev-spark
+docker run -d --rm --name dev-spark -p 4040:4040 -p 8080:8080 -p 18080:18080 -v $PWD/spark-examples:/var/examples -v $PWD/.ivy2:/root/.ivy2 -v $PWD/.sbt/:/root/.sbt/ dataminelab/dev-spark
 ```
 
 See dockerhub:
@@ -57,7 +61,7 @@ docker exec -it dockerspark_master_1 /bin/bash
 bin/pyspark
 ```
 
-To run SparkPi, exec into a container:
+To run SparkPi on docker cluster, exec into a container:
 
 ```
 docker exec -it dockerspark_master_1 /bin/bash
