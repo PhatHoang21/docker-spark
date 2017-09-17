@@ -26,7 +26,7 @@ master:
     - ./data:/tmp/data
     - ./.ivy2:/root/.ivy2
     - ./.sbt:/root/.sbt
-    - ./../spark-examples:/var/examples
+    - ./../LearningSpark:/var/examples
 
 worker:
   image: gettyimages/spark
@@ -53,5 +53,5 @@ worker:
   volumes:
     - ./conf/worker:/conf
     - ./data:/tmp/data
-    - ./../spark-examples:/var/examples
+    - ./../LearningSpark:/var/examples
     - ./spark-events:/tmp/spark-events/
